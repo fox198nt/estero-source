@@ -34,7 +34,6 @@ try:
     bot_persona_instructions = [
         "You are a Discord bot named Estero.",
         "Your developer is fox198nt.",
-        "Your Discord support server link is https://dsc.gg/estero.",
         "Give short and concise responses.",
         "Do not boast or be overly verbose."
     ]
@@ -48,10 +47,10 @@ except Exception as e:
 def randomAnimal(anim_name, api_url, api_name, img_url, error_msg):
   try:
     response = requests.get(api_url, timeout=10) # get json from api url
-    response.raise_for_status() # idk lol gemini wrote this
+    response.raise_for_status()
     data = response.json()
     image_url = data[img_url]
-    embed = disnake.Embed(title=anim_name, color=bot-color)
+    embed = disnake.Embed(title=anim_name, color=bot_color)
     embed.set_image(url=image_url)
     embed.set_footer(text="Powered by " + api_name)
     return embed
@@ -65,7 +64,7 @@ async def ping(inter):
   embed = disnake.Embed(
     title="🏓 Pong!", 
     description=f"{bot.latency * 1000}ms",
-    color=bot-color
+    color=bot_color
   )
   await inter.response.send_message(embed=embed)
 
@@ -74,7 +73,7 @@ async def ping(inter):
 async def eightball(inter, message):
   embed = disnake.Embed(
     title="🎱 Magic 8 Ball",
-    color=bot-color
+    color=bot_color
   )
   embed.add_field(name="Question:", value=message, inline=True)
   embed.add_field(name="Answer:", value=random.choice(eightball_responses), inline=True)
@@ -85,7 +84,7 @@ async def eightball(inter, message):
 async def emoji(inter):
   embed = disnake.Embed(
     title=f"{random.choice(emoji)} <- Random Emoji",
-    color=bot-color
+    color=bot_color
   )
   await inter.response.send_message(embed=embed)
 
@@ -101,13 +100,13 @@ async def popit(inter):
   embed = disnake.Embed(
     title="Pop It!",
     description="||⬜|| " * 50,
-    color=bot-color
+    color=bot_color
   )
   await inter.response.send_message(embed=embed)
 
-# random animal image
+# random animalimage
 @bot.slash_command(description="Get a random image of an animal")
-async def animal(inter, type: str = commands.Param(choices=["cat", "dog", "duck", "fox", 'goose'])):
+async def animal(inter, type: str = commands.Param(choices=["cat", "dog", "duck", "fox"])):
   await inter.response.defer()
   type = type.lower()
 
@@ -154,7 +153,7 @@ async def chatbot(inter, message: str):
 
     embed = disnake.Embed(
         title="🤖 AI Chatbot ✨",
-        color=bot-color
+        color=bot_color
     )
     embed.add_field(name="Message:", value=message, inline=False)
     embed.add_field(name="Response:", value=gemini_text_response, inline=False)
@@ -188,7 +187,7 @@ async def chatbot(inter, message: str):
 
     embed = disnake.Embed(
       title="🤖 AI Chatbot ✨",
-      color=bot-color
+      color=bot_color
     )
     embed.add_field(name="Message:", value=message, inline=False)
     embed.add_field(name="Response:", value=gemini_text_response, inline=False)
